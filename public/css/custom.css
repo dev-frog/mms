@@ -1,0 +1,45 @@
+.custom-submit{
+    padding:15px;
+}
+
+.custom-padding{
+    padding: 7px;
+}
+
+.content-wrapper > .content {
+    padding: 0 1.5rem;
+}
+
+
+.form-control-sm {
+    height: calc(2.8125rem + 2px);
+    padding: .25rem .5rem;
+    font-size: 1.875rem;
+    border-radius: .2rem;
+}
+
+.login-box, .register-box {
+    width: 100%;
+}
+
+.register-page {
+    align-items: center;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+
+.custom-add-member-button{
+    padding: 3.4rem;
+
+}
+
+
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 75%;
+        margin: 1.75rem auto;
+    }
+}
