@@ -105,11 +105,6 @@ There is error, Point is not added to  databases;
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -150,7 +145,6 @@ There is error, Point is not added to  databases;
 
     $(document).on('click','.editButton',function(e){
         var userID = $(this).attr("data-id");
-
         $("#member_id").val(userID);
     });
 

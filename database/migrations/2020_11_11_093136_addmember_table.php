@@ -23,7 +23,7 @@ class AddmemberTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE members AUTO_INCREMENT = 1000;');
+        DB::statement('ALTER TABLE members AUTO_INCREMENT = 1001;');
     }
 
     /**

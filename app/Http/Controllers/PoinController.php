@@ -42,10 +42,7 @@ class PoinController extends Controller
         $point = new Point();
         $point->shopping = $request->shopping;
         $point->point = floor($request->shopping/100);
-
         $member = Member::findOrFail($request->member_id);
-        // $member = new Member;
-        // $member = $request->member_id;
         $member->point()->save($point);
         return redirect()->back()->with('message','Point add successfully');
 
@@ -84,9 +81,11 @@ class PoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function user_point(Request $request)
     {
-        //
+
+        
+
     }
 
     /**

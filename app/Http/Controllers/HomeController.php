@@ -25,10 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $users = DB::table('members')
-        // ->join('points','points.member_id','members.id')
-        // ->get();
-
         $users =DB::table('members')
         ->join('points','points.member_id','members.id')
         // ->selectRaw('sum(points.point) as total_point')
@@ -43,19 +39,51 @@ class HomeController extends Controller
 
         $total_users = DB::table('members')
         ->get();
-
-        $max = $users->max('total_point');
-
-
-
-
-
-        return view('home',['users' =>$users,'total_users' => $total_users,'max' => $max]);
+        return view('home',['users' =>$users,'total_users' => $total_users]);
 
     }
 
-    public function edit($id){
-
-
+    public function get_user($id){
+        $user_id = Member::findOrFail($id);
+        return $user_id;
     }
+
+
+    public function update_user_point($id){
+        $users =DB::table('members')
+        ->join('points','points.member_id','members.id')
+        ->select('members.id','members.first_name','members.last_name','members.phone_number','members.card_number','members.email',DB::raw('sum(points.point) as total_point'))
+        ->where('members.id','=',$id)
+        ->groupBy('members.id')
+        ->groupBy('members.first_name')
+        ->groupBy('members.last_name')
+        ->groupBy('members.phone_number')
+        ->groupBy('members.card_number')
+        ->groupBy('members.email')
+        ->orderBy('members.id')
+        ->get();
+        return $users;
+    }
+
+    public function update(Request $request){
+
+        DB::table('points')
+        ->where('member_id', '=', $request->member_id_update)
+        ->update([
+            'point' => 0,
+            'shopping' => $request->shopping_update
+        ]);
+		// ->update([
+        //     [`point`, `>`, 0],
+		// 	[`shopping`, `>`, $request->shopping_update]
+        // ]);
+        
+        return redirect()->back()->with('message','Point add successfully');
+
+        
+    }
+
+    
+
+
 }

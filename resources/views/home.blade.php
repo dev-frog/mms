@@ -7,15 +7,15 @@
               <div class="row mb-2">
                 <div class="col-sm-6">
                   <h1 class="m-0 text-dark">Dashboard</h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                   </ol>
-                </div><!-- /.col -->
-              </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 
@@ -36,29 +36,32 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-12 right">
-            <div class="box-body">
-                <div class="form-group input-group input-group-sm">
-                    <input type="text" id="user_data" data-id="user_id" class="form-control">
-                    <span class="input-group-btn">
-                        <button data-toggle="modal" data-target="#add_point" type="submit" class="btn btn-info btn-flat user_btn">Submit</button>
-                    </span>
-                </div>
+        <div class="col-lg-6 col-md-offset-2 col-12 right">
+                <div class="box-body">
+                  <div class="form-group input-group input-group-sm ">
+                      <input type="text" id="user_data" data-id="user_id" class="form-control custom-input">
+                      <span class="input-group-btn">
+                           <button data-toggle="modal" id="onSubmit" data-target="#add_point" type="submit" class="btn btn-info  bg-green user_btn btn-lg custom-add-member-button">Add Point</button>
+                      </span>
+
+
+                      <span class="input-group-btn">
+                        <button data-toggle="modal" id="onDeleteSubmit" data-target="#delete_point" type="submit" class="btn btn-info bg-red user_btn btn-lg custom-add-member-button">Purge Point</button>
+                      </span>
+                  </div>
             </div>
 
 
         </div>
 
-        <div class="col-lg-4 col-12 right">
-            <button class="info-box bg-red btn btn-block btn-danger btn-lg custom-add-member-button" data-toggle="modal" data-target="#purge_point">Purge Point</button>
-        </div>
+        
 
 
       </div>
 
 
       <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <div class="card">
                 <div class="card-header border-transparent">
                   <h3 class="card-title">Point owner list </h3>
@@ -102,40 +105,21 @@
               </div>
           </div>
 
-
-
-          {{-- left --}}
-          <div class="col-md-4">
-            <div class="col-sm-12 custom-padding">
-                <div class="position-relative p-3 bg-gray" style="height: 180px">
-                  <div class="ribbon-wrapper ribbon-xl">
-                    <div class="ribbon bg-danger text-xl">
-                      hightest
-                    </div>
-                  </div>
-                   <h6>Name : minju rul</h6>
-                   <h6>Phone Number: 01799305582</h6>
-                   <h6>Email : minjurulhaque.pro@gmail.com</h6>
-                   <h6>Card Number : 12131231321312</h6>
-                </div>
-              </div>
-
-              <div class="col-sm-12 custom-padding">
-                <div class="position-relative p-3 bg-gray" style="height: 180px">
-                  <div class="ribbon-wrapper ribbon-xl">
-                    <div class="ribbon bg-warning text-lg">
-                      Second
-                    </div>
-                  </div>
-                   <h6>Name : minju rul</h6>
-                   <h6>Phone Number: 01799305582</h6>
-                   <h6>Email : minjurulhaque.pro@gmail.com</h6>
-                   <h6>Card Number : 12131231321312</h6>
-                </div>
-              </div>
+          @if(session()->has('message'))
+          <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-check"></i> Success!</h4>
+              Success Point has been added to the databases.
           </div>
+          @endif
 
-      </div>
+          @if(session()->has('failed'))
+          <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+          There is error, Point is not added to  databases;
+          </div>
+          @endif
 
 
 
@@ -155,37 +139,59 @@
                             <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
                                 <div class="main-card mb-3 card">
                                     <div class="card-body">
-                                        <form class="" action="{{ route('point_store') }}" method="POST">
+                                    <form action="{{ route('point_store')}}" method="POST">
                                             {{ csrf_field() }}
                                             <div class="form-row">
                                                 <div class="col-md-6">
-                                                    <div class="position-relative form-group"><label for="member_id" class="">Member ID</label>
-                                                        <input name="member_id" id="member_id" type="nuumber" class="mb-2 form-control-lg form-control" required>
+
+                                                  <div class="form-row">
+
+                                                    <div class="col-md-10">
+                                                      <div class="position-relative form-group"><label for="member_id" class="">Member ID</label>
+                                                        <input name="member_id" id="member_id"  placeholder="Member Id" type="nuumber" class="mb-2 form-control-lg form-control" required>
+                                                    </div>
+                                                  </div>
+                                                    <div class="col-md-10">
+                                                        <div class="position-relative form-group"><label for="shopping" class="">Shopping Amount</label>
+                                                            <input name="shopping" id="shopping" placeholder="Shopping Amount" type="nuumber" class="mb-2 form-control-lg form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="position-relative form-group"><label for="point" class="">Point </label>
+                                                            <p name="point" id="point" placeholder="Shopping Amount"  type="number" class="mb-2 form-control-lg form-control"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-10">
+                                                      <button name="submit" id="submit" class="mb-2 mr-2 btn btn-primary btn-lg btn-block custom-submit">Submit</button>
                                                     </div>
                                                 </div>
+
+                                                </div>
+
                                                 <div class="col-md-6">
-                                                    <div class="position-relative form-group"><label for="email" class="">Member ID</label>
-                                                        <input name="email" id="email"  type="email" class="mb-2 form-control-lg form-control" required>
-                                                    </div>
+                                                
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_name" >Member Name : </label> 
+                                                    <label class="member_info" id="member_name" for="member_name"></label>
+                                                  </div>
+
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_phone_number" >Phone Number : </label> 
+                                                    <label class="member_info" id="member_phone_number" for="member_phone_number"></label>
+                                                  </div>
+
+                                                   <div class="position-relative  member_info_from">
+                                                    <label for="member_card" >Card Number : </label> 
+                                                    <label class="member_info" id="member_card" for="member_card"></label>
+                                                  </div>
+
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_email" >Email Address : </label> 
+                                                    <label class="member_info" id="member_email" for="member_email"></label>
+                                                  </div>
                                                 </div>
                                             </div>
-
-
-                                            <div class="form-row">
-                                                <div class="col-md-6">
-                                                    <div class="position-relative form-group"><label for="shopping" class="">Shopping Amount</label>
-                                                        <input name="shopping" id="shopping" placeholder="Shopping Amount" type="nuumber" class="mb-2 form-control-lg form-control" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="position-relative form-group"><label for="point" class="">Point </label>
-                                                        <p name="point" id="point" placeholder="Shopping Amount"  type="number" class="mb-2 form-control-lg form-control"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <button name="submit" id="submit" class="mb-2 mr-2 btn btn-primary btn-lg btn-block custom-submit">Submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -194,40 +200,208 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+
                       </div>
                     </div>
                   </div>
             </div>
-
         </div>
       </div>
 
 
+      <div class="modal fade" id="delete_point" style="display: none;">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title"></h4>
+                      </div>
+                      <div class="modal-body">
 
-      <script>
+                        <div class="tab-content">
+                            <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-body">
+                                    <form action="{{ route('home_update')}}" method="POST">
+                                            {{ csrf_field() }}
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+
+                                                  <div class="form-row">
+
+                                                    <div class="col-md-10">
+                                                      <div class="position-relative form-group"><label for="member_id_update" class="">Member ID</label>
+                                                        <input name="member_id_update" id="member_id_update"  placeholder="Member ID" type="nuumber" class="mb-2 form-control-lg form-control" required>
+                                                    </div>
+                                                  </div>
+                                                    <div class="col-md-10">
+                                                        <div class="position-relative form-group"><label for="shopping_update" class="">Shopping Amount</label>
+                                                            <input name="shopping_update" id="shopping_update" placeholder="Shopping Amount" type="nuumber" class="mb-2 form-control-lg form-control" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <div class="position-relative form-group"><label for="delete_point_data" class="">Point </label>
+                                                            <p name="delete_point_data" id="delete_point_data" placeholder="Point" class="mb-2 form-control-lg form-control"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-10">
+                                                      <div class="position-relative form-group"><label for="total_amount_data" class="">Total Amount </label>
+                                                            <p name="total_amount_data" id="total_amount_data" placeholder="Point" class="mb-2 form-control-lg form-control"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-10">
+                                                      <button name="submit" id="update_submit" class="mb-2 mr-2 btn btn-primary btn-lg btn-block custom-submit">Submit</button>
+                                                    </div>
+                                                </div>
+
+                                                </div>
 
 
-    // $(document).on('click','.user_btn',function(e){
-    //     var dataID = document.getElementById("user_data").value;
-    //     $.ajax({
-    //         method:'GET',
-    //         url:'/point/' + dataID
+                                                <div class="col-md-6">
+                                                 
 
-    //     });
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_name_update" >Member Name : </label> 
+                                                    <p name="shopping_update" id="member_name_update" placeholder="Member Name" type="text" class="mb-2 form-control-lg form-control" required></p>
+                                                  </div>
 
-    // });
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_phone_number_update" >Phone Number : </label> 
+                                              
+                                                    <p name="member_phone_number_update" id="member_phone_number_update" placeholder="Phone Number" type="text" class="mb-2 form-control-lg form-control" required></p>
+                                                  </div>
 
-    $('#member_id').change(function() {
-        var dataID = document.getElementById("user_data").value;
-        $.ajax({
-            method:'GET',
-            url:'/point/' + dataID
+                                                   <div class="position-relative  member_info_from">
+                                                    <label for="member_card_update" >Card Number : </label> 
+                                                    {{-- <label class="member_info" id="member_card_update" for="member_card"></label> --}}
+                                                    <p name="member_card_update" id="member_card_update" placeholder="Card Number" type="text" class="mb-2 form-control-lg form-control" required></p>
+                                                  </div>
 
+                                                  <div class="position-relative  member_info_from">
+                                                    <label for="member_email_update" >Email Address : </label> 
+                                                    {{-- <label class="member_info" id="member_email_update" for="member_email"></label> --}}
+                                                    <p name="member_card_update" id="member_email_update" placeholder="Email Address" type="text" class="mb-2 form-control-lg form-control" required></p>
+                                                  </div>
+
+                                                  <div class="alert alert-danger alert-dismissible" id="Point_alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                    <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                                                    Your Point bellow 500, You can't use point;
+                                                  </div>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+      </div>
+    
+    
+    
+    
+    
+    
+    <script>
+
+      let userData;
+
+    $('#shopping').change(function() {
+            var paid_to_you = $(this).val();
+            if(paid_to_you > 0){
+                paid_to_you = parseInt(paid_to_you);
+                var mf = paid_to_you/100;
+                $('#point').text(Math.floor(mf));
+            }
+    });
+
+    $(document).on('click','#onSubmit',function(e){
+        let dataID = document.getElementById("user_data").value;
+        let space = " ";
+        let o_number = '0';
+        fetch('/home/'+dataID)
+        .then((response) => {
+          return response.json();
+        })
+        .then((userData) => {
+          console.log(userData);
+          $("#member_id").val(userData['id']);
+          $('#member_name').text(userData['first_name'] +  space  + userData['last_name']);
+          $('#member_email').text(userData['email']);
+          $('#member_phone_number').text(o_number + userData['phone_number']);
+          $('#member_card').text(userData['card_number']);
         });
 
     });
 
+
+    $(document).on('click','#onDeleteSubmit',function(e){
+        let dataID = document.getElementById("user_data").value;
+        let space = " ";
+        let o_number = '0';
+        fetch('/home/update/'+dataID)
+        .then((response) => {
+          return response.json();
+        })
+        .then((updateUser) => {
+          console.log(updateUser);
+          $("#member_id_update").val(updateUser['0']['id']);
+          $('#member_name_update').text(updateUser['0']['first_name'] +  space  + updateUser['0']['last_name']);
+          $('#member_email_update').text(updateUser['0']['email']);
+          $('#member_phone_number_update').text(o_number + updateUser['0']['phone_number']);
+          $('#member_card_update').text(updateUser['0']['card_number']);
+          $('#delete_point_data').text(updateUser['0']['total_point']);
+
+          if(updateUser['0']['total_point'] <= 500){
+            $('#update_submit').attr('disabled','disabled');
+            $('#Point_alert').show();
+            
+          }else{
+            $('#Point_alert').hide();
+          }
+
+          userData = updateUser['0']['total_point']
+        });
+
+    });
+
+
+    $('#shopping_update').change(function() {
+            var paid_to_you = $(this).val();
+            if(paid_to_you > 0){
+                paid_to_you = parseInt(paid_to_you);
+                var mf = paid_to_you - userData;
+                $('#total_amount_data').text(Math.floor(mf));
+            }
+    });
+
+
+
+  
+
+
+
+
+
+   
 
 
 
