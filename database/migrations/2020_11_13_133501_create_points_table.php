@@ -15,8 +15,9 @@ class CreatePointsTable extends Migration
     {
         Schema::create('points', function (Blueprint $table) {
             $table->id();
-            $table->Integer('point');
+            $table->Integer('point')->nullable()->default(0);
             $table->Integer('shopping');
+            $table->Integer('redeem_point')->nullable()->default(0);
             $table->unsignedInteger('member_id');
             $table->timestamps();
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');

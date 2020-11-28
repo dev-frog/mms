@@ -38,7 +38,7 @@ class PoinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request = Validator::make()
         $point = new Point();
         $point->shopping = $request->shopping;
         $point->point = floor($request->shopping/100);

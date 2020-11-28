@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Member;
+use App\Models\Point;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,8 +29,7 @@ class HomeController extends Controller
     {
         $users =DB::table('members')
         ->join('points','points.member_id','members.id')
-        // ->selectRaw('sum(points.point) as total_point')
-        ->select('members.id','members.first_name','members.last_name','members.phone_number','members.email',DB::raw('sum(points.point) as total_point'))
+        ->select('members.id','members.first_name','members.last_name','members.phone_number','members.email',DB::raw('(sum(points.point) - sum(points.redeem_point)) as total_point'))
         ->groupBy('members.id')
         ->groupBy('members.first_name')
         ->groupBy('members.last_name')
@@ -52,7 +53,7 @@ class HomeController extends Controller
     public function update_user_point($id){
         $users =DB::table('members')
         ->join('points','points.member_id','members.id')
-        ->select('members.id','members.first_name','members.last_name','members.phone_number','members.card_number','members.email',DB::raw('sum(points.point) as total_point'))
+        ->select('members.id','members.first_name','members.last_name','members.phone_number','members.card_number','members.email',DB::raw('abs(sum(points.point) - sum(points.redeem_point)) as total_point'))
         ->where('members.id','=',$id)
         ->groupBy('members.id')
         ->groupBy('members.first_name')
@@ -67,20 +68,29 @@ class HomeController extends Controller
 
     public function update(Request $request){
 
-        DB::table('points')
-        ->where('member_id', '=', $request->member_id_update)
-        ->update([
-            'point' => 0,
-            'shopping' => $request->shopping_update
-        ]);
-		// ->update([
-        //     [`point`, `>`, 0],
-		// 	[`shopping`, `>`, $request->shopping_update]
-        // ]);
-        
-        return redirect()->back()->with('message','Point add successfully');
+    
+        if ($request->shopping_update >= $request->delete_point_data ){
+            $point = new Point();
+            $point->shopping = $request->shopping_update;
+            $point->redeem_point =  $request->delete_point_data;
+            $member = Member::findOrFail($request->member_id_update);
+            $member->point()->save($point);
+            return redirect()->back()->with('message','Point add successfully');
+            
+
+        }else{
+            
+            $point = new Point();
+            $point->shopping = $request->shopping_update;
+            $point->redeem_point = $request->shopping_update;
+            $member = Member::findOrFail($request->member_id_update);
+            $member->point()->save($point);
+            return redirect()->back()->with('message','Point add successfully');
+            
+        }
 
         
+
     }
 
     

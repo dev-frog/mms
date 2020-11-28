@@ -12,6 +12,6 @@ class Point extends Model
 
      public function member()
     {
-        return $this->belongsTo('App\Models\Point');
+        return $this->belongsTo('App\Models\Member');
     }
 }

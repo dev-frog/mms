@@ -78,9 +78,7 @@
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <section class="content">
-
             @yield('content')
-
         </section>
     </div>
 
@@ -89,7 +87,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.1.0
         </div>
-        <strong>Copyright &copy; 2020 <a href=""></a>.</strong> All rights
+        <strong>Copyright &copy; 2020 <a href=""></a>. jatra</strong>  All rights
         reserved.
     </footer>
 </div>

@@ -244,13 +244,13 @@
                                                     </div>
                                                     <div class="col-md-10">
                                                         <div class="position-relative form-group"><label for="delete_point_data" class="">Point </label>
-                                                            <p name="delete_point_data" id="delete_point_data" placeholder="Point" class="mb-2 form-control-lg form-control"></p>
+                                                            <input name="delete_point_data" id="delete_point_data" placeholder="Point" class="mb-2 form-control-lg form-control"></input>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-10">
-                                                      <div class="position-relative form-group"><label for="total_amount_data" class="">Total Amount </label>
-                                                            <p name="total_amount_data" id="total_amount_data" placeholder="Point" class="mb-2 form-control-lg form-control"></p>
+                                                      <div class="position-relative form-group"><label for="remaining_point" id="level_point" ></label>
+                                                            <input name="total_amount_data" id="total_amount_data" placeholder="Point" class="mb-2 form-control-lg form-control"></input>
                                                         </div>
                                                     </div>
 
@@ -258,7 +258,7 @@
                                                       <button name="submit" id="update_submit" class="mb-2 mr-2 btn btn-primary btn-lg btn-block custom-submit">Submit</button>
                                                     </div>
                                                 </div>
-
+                                              </form>
                                                 </div>
 
 
@@ -272,19 +272,16 @@
 
                                                   <div class="position-relative  member_info_from">
                                                     <label for="member_phone_number_update" >Phone Number : </label> 
-                                              
                                                     <p name="member_phone_number_update" id="member_phone_number_update" placeholder="Phone Number" type="text" class="mb-2 form-control-lg form-control" required></p>
                                                   </div>
 
                                                    <div class="position-relative  member_info_from">
                                                     <label for="member_card_update" >Card Number : </label> 
-                                                    {{-- <label class="member_info" id="member_card_update" for="member_card"></label> --}}
                                                     <p name="member_card_update" id="member_card_update" placeholder="Card Number" type="text" class="mb-2 form-control-lg form-control" required></p>
                                                   </div>
 
                                                   <div class="position-relative  member_info_from">
-                                                    <label for="member_email_update" >Email Address : </label> 
-                                                    {{-- <label class="member_info" id="member_email_update" for="member_email"></label> --}}
+                                                    <label for="member_email_update">Email Address : </label> 
                                                     <p name="member_card_update" id="member_email_update" placeholder="Email Address" type="text" class="mb-2 form-control-lg form-control" required></p>
                                                   </div>
 
@@ -299,7 +296,7 @@
 
                                                 </div>
                                             </div>
-                                        </form>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -321,9 +318,7 @@
     
     
     <script>
-
       let userData;
-
     $('#shopping').change(function() {
             var paid_to_you = $(this).val();
             if(paid_to_you > 0){
@@ -368,9 +363,9 @@
           $('#member_email_update').text(updateUser['0']['email']);
           $('#member_phone_number_update').text(o_number + updateUser['0']['phone_number']);
           $('#member_card_update').text(updateUser['0']['card_number']);
-          $('#delete_point_data').text(updateUser['0']['total_point']);
+          $('#delete_point_data').val(updateUser['0']['total_point']);
 
-          if(updateUser['0']['total_point'] <= 500){
+          if(updateUser['0']['total_point'] <= 499){
             $('#update_submit').attr('disabled','disabled');
             $('#Point_alert').show();
             
@@ -386,11 +381,25 @@
 
     $('#shopping_update').change(function() {
             var paid_to_you = $(this).val();
+            let empty_point=0;
             if(paid_to_you > 0){
                 paid_to_you = parseInt(paid_to_you);
                 var mf = paid_to_you - userData;
-                $('#total_amount_data').text(Math.floor(mf));
+
+                if (userData > paid_to_you){
+                  $('#total_amount_data').val(Math.abs(mf));
+                  $('#level_point').text('Remaining Point');
+                  $('#total_amount_data').css({'background-color': '#31845fd1','color': '#fff','display': 'block'});
+
+                }else{
+                  $('#total_amount_data').val(Math.abs(mf));
+                  $('#level_point').text('Due Cash');
+                  $('#total_amount_data').css({'background-color': '#cc0101b8','color': '#fff','display': 'block'});
+                }
             }
+
+
+
     });
 
 
